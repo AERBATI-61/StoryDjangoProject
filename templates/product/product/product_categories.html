@@ -1,0 +1,146 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        tr:hover {
+            background-color: #efefef;
+        }
+    </style>
+    <body>
+
+
+    <div class="main-wrapper">
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+
+                <div class="content-page">
+
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="table-responsive">
+                                <table class="table custom-table datatable">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>product name</th>
+                                        <th>Price/Currency_Unit</th>
+                                         <th>Sell Price/Currency_Unit</th>
+                                        <th>Count</th>
+                                        <th>Category</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for product in product_categories %}
+                                        <tr id="change-color" class="odd">
+                                            <td>
+                                                {% if product.image %}
+                                                    <a href="{% url 'product_detail' product.slug %}"><img
+                                                            class="avatar text-white" src="{{ product.image.url }}"
+                                                            alt=""></a>
+                                                {% else %}
+                                                    <a href="{% url 'product_detail' product.slug %}"><img
+                                                            class="avatar text-white"
+                                                            src="{% static 'assets/img/blog/blog-01.jpg' %}" alt=""></a>
+                                                {% endif %}
+
+                                                <h2>
+                                                    <a style="margin: 2px"
+                                                       href="{% url 'product_detail' product.slug %}">{{ product.name }}
+                                                        <span>{{ product.barcode }}</span></a>
+                                                </h2>
+                                            </td>
+
+
+                                            {% for is_stock in productInStock.all %}
+                                                {% if is_stock.product.id == product.id %}
+                                                    <td>{{ is_stock.sell_price }} {{ is_stock.currency_unit }}</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+
+
+
+
+                                            <td>{{ product.get_rest_product }}</td>
+                                            {% for category in product.category.all %}
+                                                <td>
+                                                    {{ category.productCategory }}
+                                                </td>
+
+                                            {% endfor %}
+
+                                            <td class="text-right">
+                                                <a href="{% url 'product_update' product.slug %}"
+                                                   class="btn btn-primary btn-sm mb-1">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+
+
+                                                <a href="{% url 'product_delete' product.slug %}">
+                                                    <button type="submit" data-toggle="modal"
+                                                            class="btn btn-danger btn-sm mb-1">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </a>
+
+                                            </td>
+
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                Showing 1 to 10 of 14 products
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous disabled"
+                                        id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0"
+                                                                            data-dt-idx="0" tabindex="0"
+                                                                            class="page-link">Previous</a></li>
+                                    <li class="paginate_button page-item active"><a href="#"
+                                                                                    aria-controls="DataTables_Table_0"
+                                                                                    data-dt-idx="1" tabindex="0"
+                                                                                    class="page-link">1</a></li>
+                                    <li class="paginate_button page-item "><a href="#"
+                                                                              aria-controls="DataTables_Table_0"
+                                                                              data-dt-idx="2" tabindex="0"
+                                                                              class="page-link">2</a></li>
+                                    <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#"
+                                                                                                               aria-controls="DataTables_Table_0"
+                                                                                                               data-dt-idx="3"
+                                                                                                               tabindex="0"
+                                                                                                               class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+
+
+{% endblock %}

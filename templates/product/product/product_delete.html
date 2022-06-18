@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+
+    {% load crispy_forms_tags %}
+
+    <div class="main-wrapper">
+
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <h4>Are you sure want to delete {{ product.name }}?
+
+                                                <button class="btn btn-danger mr-2" type="submit">Delete</button>
+                                                </h4>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

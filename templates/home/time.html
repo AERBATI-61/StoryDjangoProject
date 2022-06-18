@@ -1,0 +1,240 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'assets/css/time.css' %}">
+    <body>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="dash-widget dash-widget5">
+                        <span class="float-left"><img src="{% static 'assets/img/dash/dash-2.png' %}"></span>
+                        <div class="dash-widget-info text-right">
+                            <span>Students</span>
+                            <h3>60,000</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="dash-widget dash-widget5">
+                        <div class="dash-widget-info text-left d-inline-block">
+                            <span>Teachers</span>
+                            <h3>12,000</h3>
+                        </div>
+                        <span class="float-right"><img src="{% static 'assets/img/dash/dash-2.png' %}"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="dash-widget dash-widget5">
+                        <span class="float-left"><img src="{% static 'assets/img/dash/dash-3.png' %}"></span>
+                        <div class="dash-widget-info text-right">
+                            <span>Parents</span>
+                            <h3>20,000</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                    <div class="dash-widget dash-widget5">
+                        <div class="dash-widget-info d-inline-block text-left">
+                            <span>Total Earnings</span>
+                            <h3>$20,000</h3>
+                        </div>
+                        <span class="float-right"><img src="{% static 'assets/img/dash/dash-4.png' %}"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-7 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="page-title">
+                                        Last Products
+                                    </div>
+                                </div>
+                                <div class="col text-right">
+                                    <div class=" mt-sm-0 mt-2">
+                                        <button class="btn btn-light" type="button" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false"><i
+                                                class="fas fa-ellipsis-h"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th>product name</th>
+                                                <th>Price/Currency_Unit</th>
+                                                <th>Sell Price/Currency_Unit</th>
+                                                <th>Count</th>
+                                                <th>Category</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for product in products %}
+                                                <tr id="change-color" class="odd">
+                                                    <td>
+                                                        {% if product.image %}
+                                                            <a href="{% url 'product_detail' product.slug %}"><img
+                                                                    class="avatar text-white"
+                                                                    src="{{ product.image.url }}"
+                                                                    alt=""></a>
+                                                        {% else %}
+                                                            <a href="{% url 'product_detail' product.slug %}"><img
+                                                                    class="avatar text-white"
+                                                                    src="{% static 'assets/img/blog/blog-01.jpg' %}"
+                                                                    alt=""></a>
+                                                        {% endif %}
+
+                                                        <h2>
+                                                            <a style="margin: 2px"
+                                                               href="{% url 'product_detail' product.slug %}">{{ product.name }}
+                                                                <span>{{ product.barcode }}</span></a>
+                                                        </h2>
+                                                    </td>
+
+
+                                                    {% for is_stock in productInStock.all %}
+                                                        {% if is_stock.product.id == product.id %}
+                                                            <td>{{ is_stock.price }} {{ is_stock.currency_unit }} </td>
+                                                            <td>{{ is_stock.sell_price }} {{ is_stock.currency_unit }} </td>
+
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                    <td>{{ product.get_rest_product }}</td>
+                                                    {% for category in product.category.all %}
+                                                        <td>
+                                                            {{ category.productCategory }}
+                                                        </td>
+                                                    {% endfor %}
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-5 d-flex col-md-2">
+                    <div>
+                        <div class="card-header">
+                            <div class="row align-items-center">
+
+                                <div class="container">
+                                    <div class="clock">
+
+                                        <div class="circle" id="sc" style="--clr:  #2FDF84"><i></i></div>
+                                        <div class="circle circle2" id="mn" style="--clr:  #007bff"><i></i>
+                                        </div>
+                                        <div class="circle circle3" id="hr" style="--clr: #8944D7"><i></i></div>
+
+                                        <span style="--i:1;"><b>1</b></span>
+                                        <span style="--i:2;"><b>2</b></span>
+                                        <span style="--i:3;"><b>3</b></span>
+                                        <span style="--i:4;"><b>4</b></span>
+                                        <span style="--i:5;"><b>5</b></span>
+                                        <span style="--i:6;"><b>6</b></span>
+                                        <span style="--i:7;"><b>7</b></span>
+                                        <span style="--i:8;"><b>8</b></span>
+                                        <span style="--i:9;"><b>9</b></span>
+                                        <span style="--i:10;"><b>10</b></span>
+                                        <span style="--i:11;"><b>11</b></span>
+                                        <span style="--i:12;"><b>12</b></span>
+                                    </div>
+                                    <div id="time">
+                                        <div id="hour" style="--clr: #8944D7">00</div>
+                                        <div id="minutes" style="--clr: #007bff">00</div>
+                                        <div id="seconds" style="--clr: #2FDF84;">00</div>
+                                        <div id="ampm">AM</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <script>
+                    let hr = document.querySelector('#hr');
+                    let mn = document.querySelector('#mn');
+                    let sc = document.querySelector('#sc');
+
+
+                    setInterval(() => {
+                        let day = new Date();
+                        let hh = day.getHours() * 30;
+                        let mm = day.getMinutes() * 6;
+                        let ss = day.getSeconds() * 6;
+
+
+                        hr.style.transform = `rotateZ(${hh + (mm / 12)}deg)`;
+                        mn.style.transform = `rotateZ(${mm}deg)`;
+                        sc.style.transform = `rotateZ(${ss}deg)`;
+
+
+                        // digital hour
+                        let hours = document.getElementById('hour');
+                        let minutes = document.getElementById('minutes');
+                        let seconds = document.getElementById('seconds');
+                        let ampm = document.getElementById('ampm');
+
+
+                        let h = new Date().getHours();
+                        let m = new Date().getMinutes();
+                        let s = new Date().getSeconds();
+
+
+                        let am_pm = h >= 12 ? 'PM' : 'AM'
+
+
+                        if (h > 12) {
+                            h = h - 12;
+                        }
+
+                        h = (h < 10) ? "0" + h : h
+                        m = (m < 10) ? "0" + m : m
+                        s = (s < 10) ? "0" + s : s
+
+
+                        hours.innerHTML = h;
+                        minutes.innerHTML = m;
+                        seconds.innerHTML = s;
+                        ampm.innerHTML = am_pm;
+                    })
+
+                </script>
+            </div>
+
+        </div>
+    </div>
+
+
+    </body>
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        tr:hover {
+            background-color: #efefef;
+        }
+    </style>
+    <body>
+
+
+    <div class="main-wrapper">
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+
+                <div class="content-page">
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating">
+                                <label class="focus-label">Product Name & Barcode No</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3">
+
+
+                            <a href="#"
+                               class="btn btn-search rounded btn-block mb-3">search </a>
+
+
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <a href="{% url 'category_create' %}" class="btn btn-search btn-block rounded mb-3"><i
+                                    class="fas fa-plus"></i>
+                                Category</a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 mb-1">
+                            <div class="table-responsive">
+                                <table class="table custom-table datatable" id="product-list">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>Category name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for product in categories %}
+                                        <tr id="change-color" class="odd">
+                                            <td>{{ product.productCategory }}</td>
+
+                                            <td class="text-right">
+                                                <a href="{% url 'category_update' product.pk %}"
+                                                   class="btn btn-primary btn-sm mb-1">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+
+
+                                                <a href="{% url 'category_delete' product.pk %}">
+                                                    <button type="submit" data-toggle="modal"
+                                                            class="btn btn-danger btn-sm mb-1">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </a>
+
+                                            </td>
+
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-7" style="margin-top: 1rem">
+                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                {% if is_paginated %}
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+
+                                            id="DataTables_Table_0_previous">
+                                            {% if page_obj.has_previous %}
+                                                <a style="color: white" class="btn btn-secondary"
+                                                   href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                            {% endif %}
+                                        </li>
+
+                                        <li class="paginate_button page-item active"><a style="color: white; margin: 1px"
+                                                class="btn btn-secondary">Page {{ page_obj.number }}
+                                            of {{ page_obj.paginator.num_pages }}.</a></li>
+
+
+
+                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                                            {% if page_obj.has_next %}
+                                                <a href="?page={{ page_obj.next_page_number }}"
+                                                   class="btn btn-secondary" style="color: white">Next</a>
+
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+
+
+{% endblock %}

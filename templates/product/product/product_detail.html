@@ -1,0 +1,93 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+
+    <body>
+
+    <div class="main-wrapper">
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+
+                <div class="card-box m-b-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                        {% if product.image %}
+                                            <a href="#"><img class="avatar" src="{{ product.image.url }}" alt=""></a>
+                                        {% else %}
+                                            <a href="#"><img class="avatar" src="{% static 'assets/img/user.jpg' %}"
+                                                             alt=""></a>
+                                        {% endif %}
+
+
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <span class="title">Barcode: </span>
+                                                        <span class="text"><a href="#">{{ product.barcode }}</a></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Name:</span>
+                                                        <span class="text">{{ product.name }}</span>
+                                                    </li>
+                                                    {% for category in product.category.all %}
+                                                        <li>
+                                                        <span class="title">Category:</span>
+                                                        <span class="text">{{ category.productCategory}}</span>
+                                                    </li>
+
+                                                    {% endfor %}
+
+                                                    <li>
+                                                        <span class="title">Date-Time:</span>
+                                                        <span class="text">{{ product.datetime|date:"F  d  Y" }}</span>
+
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+
+
+                                            <div class="col-md-8 col-sm-12">
+                                                <div class="ribbon-wrapper card">
+                                                    <div class="card-body">
+                                                        <div class="ribbon ribbon-success">Aciklama</div>
+                                                        <p>{{ product.description }}</p>
+
+
+                                                            <a style="margin-left: 1rem" href="{% url 'product_list' %}">
+                                                            <button type="button" class="btn btn-success btn-sm mb-0.1">
+                                                                < Geri Don
+                                                            </button>
+                                                        </a>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    </body>
+{% endblock %}
